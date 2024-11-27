@@ -1128,17 +1128,12 @@
         }
       }
 
-      /* Mobile devices */
-      @media screen and (max-width: 768px) {
-        .app-logo {
-          top: 15px;
-          left: 15px;
-          width: 45px;
-          height: 45px;
-          padding: 6px;
-        }
-      }
-
+   /* Mobile devices */
+@media screen and (max-width: 768px) {
+  .app-logo {
+    display: none;
+  }
+}
       /* Small mobile devices */
       @media screen and (max-width: 480px) {
         .app-logo {
