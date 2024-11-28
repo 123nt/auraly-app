@@ -1,8 +1,8 @@
 {
-  "name": "Auraly ",
+  "name": "Auraly",
   "short_name": "Auraly",
   "description": "A music platform for every music lover",
-  "start_url": "./search.html",
+  "start_url": "./auraly-app.html",
   "display": "standalone",
   "background_color": "#EEE0CA",
   "theme_color": "#EEE0CA",
