@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Playlist - Auraly</title>
+    <link rel="stylesheet" href="playlist-styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <ul class="nav-links">
+        <li><a href="auraly-app.html">Home</a></li>
+        <li><a href="search.html">Search</a></li>
+        <li><a href="playlist.html" class="active">My Playlist</a></li>
+        <li><a href="artish/country-playlist.html">Country</a></li>
+        <li><a href="artish/hip-hop.html">Hip Hop</a></li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <div class="playlist-section">
+        <div class="playlist-header">
+          <h1>My Playlist</h1>
+          <p>Add and manage your favorite songs</p>
+        </div>
+
+        <form class="add-song-form" id="addSongForm">
+          <input
+            type="text"
+            id="songTitle"
+            placeholder="Song title"
+            required
+          />
+          <input
+            type="text"
+            id="artistName"
+            placeholder="Artist name"
+            required
+          />
+          <button type="submit">
+            <i class="fas fa-plus"></i> Add Song
+          </button>
+        </form>
+
+        <ul class="songs-list" id="songsList">
+          <!-- Songs will be added here dynamically -->
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById('addSongForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const songTitle = document.getElementById('songTitle').value;
+        const artistName = document.getElementById('artistName').value;
+        
+        // Create new song item
+        const songItem = document.createElement('li');
+        songItem.className = 'song-item';
+        songItem.innerHTML = `
+          <div class="song-info">
+            <h3>${songTitle}</h3>
+            <p>${artistName}</p>
+          </div>
+          <div class="song-controls">
+            <button onclick="playSong(this)" title="Play">
+              <i class="fas fa-play"></i>
+            </button>
+            <button onclick="removeSong(this)" title="Remove">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        `;
+        
+        document.getElementById('songsList').appendChild(songItem);
+        
+        // Clear form
+        document.getElementById('songTitle').value = '';
+        document.getElementById('artistName').value = '';
+      });
+
+      function playSong(button) {
+        const playIcon = button.querySelector('i');
+        if (playIcon.classList.contains('fa-play')) {
+          playIcon.classList.replace('fa-play', 'fa-pause');
+        } else {
+          playIcon.classList.replace('fa-pause', 'fa-play');
+        }
+      }
+
+      function removeSong(button) {
+        button.closest('.song-item').remove();
+      }
+    </script>
+  </body>
+</html>
