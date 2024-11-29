@@ -36,42 +36,41 @@ function togglePlay(songId) {
   const bgContainer = document.getElementById("backgroundImage");
   const audio = document.getElementById(`audio${songId.replace("song", "")}`);
   const progressContainer = document.getElementById(songId);
-
-  // Set background image for the selected song
-  if (backgroundImages[songId]) {
-    bgContainer.style.backgroundImage = `url('${backgroundImages[songId]}')`;
-    bgContainer.classList.add("background-image-active");
-  }
+  const songElement = progressContainer.parentElement;
 
   // Pause the current song if another one is clicked
   if (currentlyPlayingAudio && currentlyPlayingAudio !== audio) {
     currentlyPlayingAudio.pause();
-    if (!isDragging) currentlyPlayingContainer.style.display = "none"; // Hide previous song's progress only if not dragging
+    if (!isDragging) {
+      currentlyPlayingContainer.style.display = "none";
+      currentlyPlayingContainer.parentElement.classList.remove("playing");
+    }
+    bgContainer.classList.remove("background-image-active"); // Hide background when previous song is paused
   }
 
-  // Toggle play/pause of the selected song
-  if (currentlyPlayingAudio === audio) {
-    audio.pause();
-    currentlyPlayingAudio = null;
-    if (!isDragging) currentlyPlayingContainer.style.display = "none"; // Hide progress bar only if not dragging
-    currentlyPlayingContainer = null;
-  } else {
+  if (audio.paused) {
     audio.play();
-    progressContainer.style.display = "block"; // Show the progress bar when playing
-    currentlyPlayingAudio = audio;
-    currentlyPlayingContainer = progressContainer;
+    progressContainer.style.display = "block";
+    songElement.classList.add("playing");
+    // Set and show background image for the selected song
+    if (backgroundImages[songId]) {
+      bgContainer.style.backgroundImage = `url('${backgroundImages[songId]}')`;
+      bgContainer.classList.add("background-image-active");
+    }
+  } else {
+    audio.pause();
+    progressContainer.style.display = "none";
+    songElement.classList.remove("playing");
+    bgContainer.classList.remove("background-image-active"); // Hide background when song is paused
+  }
+
+  currentlyPlayingAudio = audio;
+  currentlyPlayingContainer = progressContainer;
+
+  // Start updating progress if the audio is playing
+  if (!audio.paused) {
     updateProgress(audio, songId);
   }
-
-  // When the song ends, play the next song automatically
-  audio.addEventListener("ended", () => {
-    currentlyPlayingAudio = null;
-    if (!isDragging) currentlyPlayingContainer.style.display = "none"; // Hide only if not dragging
-    const nextSongId = getNextSongId(songId);
-    if (nextSongId) {
-      setTimeout(() => togglePlay(nextSongId), 2000); // Auto-play next song after 2 seconds
-    }
-  });
 }
 
 function getNextSongId(currentSongId) {
