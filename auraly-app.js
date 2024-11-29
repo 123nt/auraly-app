@@ -268,6 +268,16 @@ function showSongDetails(event, title, artist, album, albumCover) {
   songDetailsPanel.style.transform = 'translateX(0)';
 }
 
+// Function to minimize the song details panel
+function minimizeSongPanel() {
+  const songDetailsPanel = document.getElementById('songDetailsPanel');
+  songDetailsPanel.style.transform = 'translateX(100%)';
+  setTimeout(() => {
+    songDetailsPanel.style.display = 'none';
+    songDetailsPanel.style.transform = 'translateX(0)';
+  }, 300);
+}
+
 // Play next song function
 function playNextSong() {
   const songs = document.querySelectorAll('.song');
@@ -582,6 +592,12 @@ document.addEventListener("DOMContentLoaded", () => {
       songDetailsPanel.style.transform = 'translateX(0)';
     }
   });
+
+  // Add click event listener for close button
+  const closeBtn = document.querySelector('.close-btn');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', minimizeSongPanel);
+  }
 });
 
 // Deferred prompt
