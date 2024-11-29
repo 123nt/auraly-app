@@ -256,20 +256,16 @@ function updateSongDetailsPanel(title, artist, album, albumCover) {
 function showSongDetails(event, title, artist, album, albumCover) {
   event.stopPropagation(); // Prevent song from playing when clicking info
   const songDetailsPanel = document.getElementById("songDetailsPanel");
-
-  // Update panel content
-  songDetailsPanel.querySelector(".album-cover").src = albumCover;
-  songDetailsPanel.querySelector(".song-title").textContent = title;
-  songDetailsPanel.querySelector(".song-artist").textContent = artist;
-  songDetailsPanel.querySelector(".song-album").textContent = album;
-
-  // Show the panel
-  songDetailsPanel.classList.add("active");
-
-  // Setup close button
-  songDetailsPanel.querySelector(".close-btn").onclick = () => {
-    songDetailsPanel.classList.remove("active");
-  };
+  updateSongDetailsPanel(title, artist, album, albumCover);
+  
+  songDetailsPanel.style.transform = 'translateX(100%)';
+  songDetailsPanel.style.display = 'block';
+  
+  // Trigger reflow
+  songDetailsPanel.offsetHeight;
+  
+  // Animate panel in
+  songDetailsPanel.style.transform = 'translateX(0)';
 }
 
 // Play next song function
@@ -478,6 +474,10 @@ function handleSearch() {
 // Cache progress bar elements
 let progressBar, currentTimeEl, durationTimeEl;
 
+// Swipe handling variables
+let touchStartX = 0;
+let touchEndX = 0;
+
 // Document event listener
 document.addEventListener("DOMContentLoaded", () => {
   // Cache progress elements
@@ -545,6 +545,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Add event listener for the previous button
   document.querySelector('.previous-button').addEventListener('click', playPreviousSong);
+
+  // Add touch event listeners to song details panel
+  const songDetailsPanel = document.getElementById('songDetailsPanel');
+
+  songDetailsPanel.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+  });
+
+  songDetailsPanel.addEventListener('touchmove', (e) => {
+    touchEndX = e.touches[0].clientX;
+    const diffX = touchStartX - touchEndX;
+    
+    // If swiping right (to close)
+    if (diffX < 0) {
+      const translateX = Math.abs(diffX);
+      songDetailsPanel.style.transform = `translateX(${translateX}px)`;
+    }
+  });
+
+  songDetailsPanel.addEventListener('touchend', () => {
+    const diffX = touchStartX - touchEndX;
+    const threshold = window.innerWidth * 0.2; // 20% of screen width
+
+    if (Math.abs(diffX) > threshold) {
+      if (diffX < 0) {
+        // Swipe right - close panel
+        songDetailsPanel.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+          songDetailsPanel.style.display = 'none';
+          songDetailsPanel.style.transform = 'translateX(0)';
+        }, 300);
+      }
+    } else {
+      // Reset position if threshold not met
+      songDetailsPanel.style.transform = 'translateX(0)';
+    }
+  });
 });
 
 // Deferred prompt
