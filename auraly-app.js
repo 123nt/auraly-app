@@ -600,87 +600,87 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Deferred prompt
-let deferredPrompt;
+  // Deferred prompt
+  let deferredPrompt;
 
-// Handle install prompt
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-});
-
-// Create install buttons immediately when page loads
-document.addEventListener("DOMContentLoaded", () => {
-  // Create floating button
-  const floatingInstallBtn = document.createElement("button");
-  floatingInstallBtn.innerHTML = `
-    <span style="display: flex; align-items: center; gap: 8px;">
-      <svg style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M13 5v6h1.17L12 13.17 9.83 11H11V5h2m2-2H9v6H5l7 7 7-7h-4V3zm4 15H5v2h14v-2z"/>
-      </svg>
-      Install Auraly
-    </span>
-  `;
-  floatingInstallBtn.classList.add("floating-install-button");
-  floatingInstallBtn.style.cssText = `
-    position: fixed;
-    bottom: 80px;
-    right: 20px;
-    padding: 12px 24px;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 25px;
-    color: rgba(0, 0, 0, 0.8);
-    cursor: pointer;
-    z-index: 1000;
-    box-shadow: 
-      0 4px 12px rgba(0, 0, 0, 0.1),
-      0 2px 4px rgba(0, 0, 0, 0.05);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    font-size: 15px;
-    font-weight: 500;
-    letter-spacing: 0.3px;
-    transform: translateY(0);
-    opacity: 0.9;
-  `;
-
-  // Add hover effect
-  floatingInstallBtn.addEventListener('mouseenter', () => {
-    floatingInstallBtn.style.transform = 'translateY(-2px)';
-    floatingInstallBtn.style.opacity = '1';
-    floatingInstallBtn.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.12), 0 3px 6px rgba(0, 0, 0, 0.08)';
+  // Handle install prompt
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
   });
 
-  floatingInstallBtn.addEventListener('mouseleave', () => {
-    floatingInstallBtn.style.transform = 'translateY(0)';
-    floatingInstallBtn.style.opacity = '0.9';
-    floatingInstallBtn.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05)';
-  });
+  // Create install buttons immediately when page loads
+  document.addEventListener("DOMContentLoaded", () => {
+    // Create floating button
+    const floatingInstallBtn = document.createElement("button");
+    floatingInstallBtn.innerHTML = `
+      <span style="display: flex; align-items: center; gap: 8px;">
+        <svg style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M13 5v6h1.17L12 13.17 9.83 11H11V5h2m2-2H9v6H5l7 7 7-7h-4V3zm4 15H5v2h14v-2z"/>
+        </svg>
+        Install Auraly
+      </span>
+    `;
+    floatingInstallBtn.classList.add("floating-install-button");
+    floatingInstallBtn.style.cssText = `
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      padding: 12px 24px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 25px;
+      color: rgba(0, 0, 0, 0.8);
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.1),
+        0 2px 4px rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      transform: translateY(0);
+      opacity: 0.9;
+    `;
 
-  // Check if the app is installed on any device
-  if (window.matchMedia("(display-mode: standalone)").matches) {
-    floatingInstallBtn.style.display = "none"; // Hide button if installed
-  }
+    // Add hover effect
+    floatingInstallBtn.addEventListener('mouseenter', () => {
+      floatingInstallBtn.style.transform = 'translateY(-2px)';
+      floatingInstallBtn.style.opacity = '1';
+      floatingInstallBtn.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.12), 0 3px 6px rgba(0, 0, 0, 0.08)';
+    });
 
-  floatingInstallBtn.addEventListener("click", () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(({ outcome }) => {
-        if (outcome === "accepted") {
-          console.log("User accepted the install prompt");
-        }
-        deferredPrompt = null;
-      });
-    } else {
-      alert(
-        "To install the app: \n1. On Desktop: Click the install icon in your browser's address bar\n2. On Mobile: Add to Home Screen from your browser menu"
-      );
+    floatingInstallBtn.addEventListener('mouseleave', () => {
+      floatingInstallBtn.style.transform = 'translateY(0)';
+      floatingInstallBtn.style.opacity = '0.9';
+      floatingInstallBtn.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05)';
+    });
+
+    // Check if the app is installed on any device
+    if (window.matchMedia("(display-mode: standalone)").matches) {
+      floatingInstallBtn.style.display = "none"; // Hide button if installed
     }
-  });
 
-  document.body.appendChild(floatingInstallBtn);
-});
+    floatingInstallBtn.addEventListener("click", () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(({ outcome }) => {
+          if (outcome === "accepted") {
+            console.log("User accepted the install prompt");
+          }
+          deferredPrompt = null;
+        });
+      } else {
+        alert(
+          "To install the app: \n1. On Desktop: Click the install icon in your browser's address bar\n2. On Mobile: Add to Home Screen from your browser menu"
+        );
+      }
+    });
+
+    document.body.appendChild(floatingInstallBtn);
+  });
