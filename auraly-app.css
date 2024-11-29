@@ -158,12 +158,12 @@ body {
   gap: 8px;
   margin: 20px auto;
   width: 100%;
-  max-width: 250px;
+  max-width: 270px;
   position: relative;
 }
 
 #searchInput {
-  width: 150%;
+  width: 170%;
   padding: 12px;
   border: none;
   border-radius: 20px;
