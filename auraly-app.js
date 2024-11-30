@@ -254,12 +254,14 @@ function updateSongDetailsPanel(title, artist, album, albumCover) {
 
 // Show song details function
 function showSongDetails(event, title, artist, album, albumCover) {
-  event.stopPropagation(); // Prevent song from playing when clicking info
+  if (event) {
+    event.stopPropagation(); // Prevent song from playing when clicking info
+  }
   const songDetailsPanel = document.getElementById("songDetailsPanel");
   updateSongDetailsPanel(title, artist, album, albumCover);
   
   // First set display to block to start the animation
-  songDetailsPanel.style.display = 'block';
+  songDetailsPanel.style.display = 'flex';
   
   // Force a reflow to ensure the transition works
   songDetailsPanel.offsetHeight;
