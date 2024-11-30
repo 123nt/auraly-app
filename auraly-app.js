@@ -96,7 +96,7 @@ async function performSearch(query) {
 
       songElement.innerHTML = `
         <button class="info-icon" onclick="showSongDetails(event, '${song.title}', '${song.artist.name}', '${song.album.title}', '${song.album.cover_medium}')">
-          <i class="fas fa-info"></i>
+          !
         </button>
         <img src="${song.album.cover_medium}" alt="${song.title}" />
         <div class="song-details">
@@ -295,7 +295,12 @@ function playNextSong() {
   const newIndex = currentIndex < songs.length - 1 ? currentIndex + 1 : 0;
   const nextSong = songs[newIndex];
   const albumCover = nextSong.querySelector('img').src;
+  const title = nextSong.querySelector('.song-title').textContent;
+  const artist = nextSong.querySelector('.song-artist').textContent;
+  const album = nextSong.querySelector('img').alt;
+  
   togglePlay(nextSong.id, albumCover);
+  showSongDetails(null, title, artist, album, albumCover);
 }
 
 // Play previous song function
@@ -306,9 +311,14 @@ function playPreviousSong() {
   if (currentIndex === -1) return;
   
   const newIndex = currentIndex > 0 ? currentIndex - 1 : songs.length - 1;
-  const previousSong = songs[newIndex];
-  const albumCover = previousSong.querySelector('img').src;
-  togglePlay(previousSong.id, albumCover);
+  const prevSong = songs[newIndex];
+  const albumCover = prevSong.querySelector('img').src;
+  const title = prevSong.querySelector('.song-title').textContent;
+  const artist = prevSong.querySelector('.song-artist').textContent;
+  const album = prevSong.querySelector('img').alt;
+  
+  togglePlay(prevSong.id, albumCover);
+  showSongDetails(null, title, artist, album, albumCover);
 }
 
 // Show section function

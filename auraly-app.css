@@ -271,10 +271,9 @@ h1 {
   right: 10px;
   background: rgba(255, 255, 255, 0.9);
   border: none;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
+  width: 20px;
+  height: 20px;
+  display: none;
   align-items: center;
   justify-content: center;
   cursor: pointer;
@@ -282,23 +281,11 @@ h1 {
   z-index: 2;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   -webkit-tap-highlight-color: transparent;
-}
-
-.song .info-icon i {
-  font-size: 16px;
-}
-
-@media (max-width: 768px) {
-  .song .info-icon {
-    width: 36px;
-    height: 36px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  
-  .song .info-icon i {
-    font-size: 18px;
-  }
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+  padding: 0;
+  line-height: 1;
 }
 
 .song.playing .info-icon {
@@ -309,6 +296,16 @@ h1 {
   background: #4caf50;
   color: white;
   transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .song .info-icon {
+    width: 24px;
+    height: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+  }
 }
 
 .song::after {
