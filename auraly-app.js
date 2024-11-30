@@ -258,24 +258,31 @@ function showSongDetails(event, title, artist, album, albumCover) {
   const songDetailsPanel = document.getElementById("songDetailsPanel");
   updateSongDetailsPanel(title, artist, album, albumCover);
   
-  songDetailsPanel.style.transform = 'translateX(100%)';
+  // First set display to block to start the animation
   songDetailsPanel.style.display = 'block';
   
-  // Trigger reflow
+  // Force a reflow to ensure the transition works
   songDetailsPanel.offsetHeight;
   
-  // Animate panel in
-  songDetailsPanel.style.transform = 'translateX(0)';
+  // Then add the active class to trigger the animation
+  songDetailsPanel.classList.add('active');
+  songDetailsPanel.style.visibility = 'visible';
+  songDetailsPanel.style.opacity = '1';
 }
 
 // Function to minimize the song details panel
 function minimizeSongPanel() {
   const songDetailsPanel = document.getElementById('songDetailsPanel');
-  songDetailsPanel.style.transform = 'translateX(100%)';
+  
+  // Remove the active class to start the closing animation
+  songDetailsPanel.classList.remove('active');
+  songDetailsPanel.style.opacity = '0';
+  
+  // Wait for the animation to complete before hiding
   setTimeout(() => {
+    songDetailsPanel.style.visibility = 'hidden';
     songDetailsPanel.style.display = 'none';
-    songDetailsPanel.style.transform = 'translateX(0)';
-  }, 300);
+  }, 400); // Match this with the CSS transition duration
 }
 
 // Play next song function

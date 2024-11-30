@@ -160,7 +160,7 @@
     <!-- Update the song details panel HTML structure -->
     <div class="song-details-panel" id="songDetailsPanel">
       <div class="panel-header">
-        <button class="close-btn">&times;</button>
+        <button class="close-btn" onclick="minimizeSongPanel()">&times;</button>
       </div>
       <div class="panel-content">
         <img class="album-cover" src="" alt="Album Cover" />
@@ -216,6 +216,9 @@
             </svg>
           </button>
         </div>
+        <button class="minimize-btn" onclick="minimizeSongPanel()">
+          <i class="fas fa-chevron-down"></i> Minimize
+        </button>
       </div>
     </div>
     <script src="auraly-app.js"></script>
